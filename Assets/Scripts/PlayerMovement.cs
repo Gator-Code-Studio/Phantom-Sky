@@ -56,10 +56,38 @@ public class PlayerMovement : MonoBehaviour
     private bool isJumpingDown;
     private bool movingKeyPressed;
 
+<<<<<<< HEAD
     // Update
     void Update()
     {
         bool grounded = IsGrounded();
+=======
+
+    AudioManager audioManager;
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+    }
+    private void PlayLandingSound()
+    {
+        bool grounded = IsGrounded();
+
+        
+        if (grounded && !wasGrounded)
+        {
+            audioManager.PlaySFX(audioManager.land);
+        }
+
+        wasGrounded = grounded;
+    }
+
+    // Update
+    void Update()
+    {
+
+        bool grounded = IsGrounded();
+        PlayLandingSound();
+>>>>>>> main
 
         if (grounded)
         {
@@ -95,6 +123,10 @@ public class PlayerMovement : MonoBehaviour
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpingPower);
             doubleJump = true;
             jumpBufferCounter = 0f;
+<<<<<<< HEAD
+=======
+            audioManager.PlaySFX(audioManager.jump);
+>>>>>>> main
         }
 
         if (jumpBufferCounter > 0f && !IsGrounded() && doubleJump && !isWallSliding)
@@ -102,6 +134,10 @@ public class PlayerMovement : MonoBehaviour
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpingPower);
             doubleJump = false;
             jumpBufferCounter = 0f;
+<<<<<<< HEAD
+=======
+            audioManager.PlaySFX(audioManager.jump);
+>>>>>>> main
         }
 
         wasGrounded = grounded;
@@ -199,8 +235,21 @@ public class PlayerMovement : MonoBehaviour
     private bool IsWalled()
     {
         Console.Write("IsWalled");
+<<<<<<< HEAD
         return Physics2D.OverlapCircle(wallCheck.position, 0.2f, wallLayer);
     }
+=======
+        return Physics2D.OverlapCircle(wallCheck.position, 0.01f, wallLayer);
+    }
+    
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(wallCheck.position, 0.2f);
+
+    }
+
+>>>>>>> main
 
     private void WallSlide()
     {
