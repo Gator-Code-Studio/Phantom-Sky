@@ -644,7 +644,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 588405075}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 400d217eefee64140bc719ff98d9b393, type: 3}
   m_Name: 
@@ -851,7 +851,7 @@ Transform:
   m_GameObject: {fileID: 597107293}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.206, y: 0.495, z: 0}
+  m_LocalPosition: {x: -0.99, y: 0.97, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2034,6 +2034,7 @@ GameObject:
   - component: {fileID: 1495754583}
   - component: {fileID: 1495754584}
   - component: {fileID: 1495754585}
+  - component: {fileID: 1495754586}
   m_Layer: 0
   m_Name: EnemyHitBox
   m_TagString: Untagged
@@ -2066,7 +2067,7 @@ BoxCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 1e6641859a7a0aa4c81515f24d081d84, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -2116,6 +2117,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAttackHitbox
   damage: 1
   ignoreTag: Enemy
+--- !u!50 &1495754586
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495754582}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1497327439
 GameObject:
   m_ObjectHideFlags: 0
@@ -2342,7 +2370,7 @@ Transform:
   m_GameObject: {fileID: 1560732252}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.7261, y: 0.838, z: 0}
+  m_LocalPosition: {x: -0.96, y: 0.644, z: 0}
   m_LocalScale: {x: 0.6032108, y: 0.7128734, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2437,7 +2465,7 @@ Rigidbody2D:
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 5
 --- !u!95 &1560732258
 Animator:
   serializedVersion: 7
@@ -2472,6 +2500,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dd24e4e851699c4e87dcf40afb67bbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  player: {fileID: 597107298}
+  moveSpeed: 0.8
+  attackRange: 0.01
   attackHitbox: {fileID: 1495754585}
 --- !u!1 &1972816476
 GameObject:
