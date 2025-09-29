@@ -6,7 +6,7 @@ public class Health : MonoBehaviour, IDamageable
     public int maxHP = 5;
     public bool isPlayer = false;           
     public float hurtInvulnTime = 0.3f;     
-    private int hp;
+    public float hp {get; private set;}
     private bool invuln;
 
     [Header("Death")]
@@ -59,5 +59,11 @@ public class Health : MonoBehaviour, IDamageable
 
         if (!isPlayer) Destroy(gameObject, 0.75f);
 
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.E))
+            TakeHit(1);
     }
 }
