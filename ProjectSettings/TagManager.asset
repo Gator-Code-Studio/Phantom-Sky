@@ -5,13 +5,9 @@ TagManager:
   serializedVersion: 3
   tags:
   - OneWayPlatform
-<<<<<<< HEAD
-  - SpawnPoint
-=======
   - Enemy
   - Ladder
   - Audio
->>>>>>> main
   layers:
   - Default
   - TransparentFX
@@ -49,11 +45,8 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-<<<<<<< HEAD
-=======
   - name: Front
     uniqueID: 2053956005
     locked: 0
->>>>>>> main
   m_RenderingLayers:
   - Default

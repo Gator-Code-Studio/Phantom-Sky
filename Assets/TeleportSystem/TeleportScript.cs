@@ -15,6 +15,9 @@ public class TeleportScript : MonoBehaviour
         if (nextIndex < SceneManager.sceneCountInBuildSettings)
         {
             SceneManager.LoadScene(nextIndex);
+
+
+
         }
     }
 

@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        moveAction = playerInput.actions["Move"];
+          moveAction = playerInput.actions["Move"];
     }
 
     private void Update()
