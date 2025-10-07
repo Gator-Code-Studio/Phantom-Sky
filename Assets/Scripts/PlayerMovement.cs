@@ -69,7 +69,7 @@ public class PlayerMovement : MonoBehaviour
         
         if (grounded && !wasGrounded)
         {
-            audioManager.PlaySFX(audioManager.land);
+          audioManager.PlaySFX(audioManager.land);
         }
 
         wasGrounded = grounded;
