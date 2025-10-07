@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyAttackHitbox : MonoBehaviour
+ public class EnemyAttackHitbox : MonoBehaviour
 {
     public int damage = 1;
     public string ignoreTag = "Enemy";
@@ -16,9 +16,9 @@ public class EnemyAttackHitbox : MonoBehaviour
     public void DisableHitbox() { if (col) col.enabled = false; }
 
     void OnTriggerEnter2D(Collider2D other)
-    {
+    { 
         if (other.CompareTag(ignoreTag)) return;
-        var d = other.GetComponent<IDamageable>();
-        if (d != null) d.TakeHit(damage);
+        var d = other.GetComponent<IDamageable>(); 
+          if (d != null) d.TakeHit(damage);
     }
 }
