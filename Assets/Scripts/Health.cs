@@ -4,27 +4,25 @@ public class Health : MonoBehaviour, IDamageable
 {
     [Header("Health")]
     public int maxHP = 5;
-    public bool isPlayer = false;
-    public float hurtInvulnTime = 0.3f;
-    private int hp;
+    public bool isPlayer = false;           
+    public float hurtInvulnTime = 0.3f;     
+    public float hp {get; private set;}
     private bool invuln;
 
     [Header("Death")]
-    public GameObject deathVFX;
+    public GameObject deathVFX;             
 
     private Animator anim;
     private Collider2D[] cols;
-    private Rigidbody2D rb;
 
     void Awake()
     {
         hp = maxHP;
         anim = GetComponent<Animator>();
         cols = GetComponentsInChildren<Collider2D>(true);
-        rb = GetComponent<Rigidbody2D>();
     }
 
-    public void TakeHit(int amount)
+    public void TakeHit(int amount) 
     {
         if (invuln || hp <= 0) return;
 
@@ -57,21 +55,15 @@ public class Health : MonoBehaviour, IDamageable
 
         foreach (var c in cols) c.enabled = false;
 
-        if (rb != null)
-        {
-            rb.linearVelocity = Vector2.zero;
-            rb.bodyType = RigidbodyType2D.Static;  // freeze in place
-        }
-
         if (deathVFX) Instantiate(deathVFX, transform.position, Quaternion.identity);
+
+        if (!isPlayer) Destroy(gameObject, 0.75f);
 
     }
 
-    public void Despawn()
+    private void Update()
     {
-        if (!isPlayer)
-        {
-            Destroy(gameObject);
-        }
+        if(Input.GetKeyDown(KeyCode.E))
+            TakeHit(1);
     }
 }
