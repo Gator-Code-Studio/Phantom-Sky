@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!74 &7400000
+AnimationClip:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Bat_Hurt
+  serializedVersion: 7
+  m_Legacy: 0
+  m_Compressed: 0
+  m_UseHighQualityCurve: 1
+  m_RotationCurves: []
+  m_CompressedRotationCurves: []
+  m_EulerCurves: []
+  m_PositionCurves: []
+  m_ScaleCurves: []
+  m_FloatCurves: []
+  m_PPtrCurves:
+  - serializedVersion: 2
+    curve:
+    - time: 0
+      value: {fileID: 1145346145806320386, guid: 098f30f1c7489f74c876f31b7f4fb894, type: 3}
+    - time: 0.083333336
+      value: {fileID: 7297727458585210747, guid: 78ebbfae3a89ab34cb827e753fcc9c4b, type: 3}
+    - time: 0.16666667
+      value: {fileID: -5599527896983793883, guid: e4064c31e9ba06a438b906a657f9f8ab, type: 3}
+    - time: 0.25
+      value: {fileID: 1861716428151806308, guid: 72d27e1cb94320a49b8f1d4a05c4c13e, type: 3}
+    - time: 0.33333334
+      value: {fileID: 4341117949806097499, guid: 13962a8ac10b81b47a3dc72f7c2a9b61, type: 3}
+    attribute: m_Sprite
+    path: 
+    classID: 212
+    script: {fileID: 0}
+    flags: 2
+  m_SampleRate: 12
+  m_WrapMode: 0
+  m_Bounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
+  m_ClipBindingConstant:
+    genericBindings:
+    - serializedVersion: 2
+      path: 0
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 212
+      customType: 23
+      isPPtrCurve: 1
+      isIntCurve: 0
+      isSerializeReferenceCurve: 0
+    pptrCurveMapping:
+    - {fileID: 1145346145806320386, guid: 098f30f1c7489f74c876f31b7f4fb894, type: 3}
+    - {fileID: 7297727458585210747, guid: 78ebbfae3a89ab34cb827e753fcc9c4b, type: 3}
+    - {fileID: -5599527896983793883, guid: e4064c31e9ba06a438b906a657f9f8ab, type: 3}
+    - {fileID: 1861716428151806308, guid: 72d27e1cb94320a49b8f1d4a05c4c13e, type: 3}
+    - {fileID: 4341117949806097499, guid: 13962a8ac10b81b47a3dc72f7c2a9b61, type: 3}
+  m_AnimationClipSettings:
+    serializedVersion: 2
+    m_AdditiveReferencePoseClip: {fileID: 0}
+    m_AdditiveReferencePoseTime: 0
+    m_StartTime: 0
+    m_StopTime: 0.41666666
+    m_OrientationOffsetY: 0
+    m_Level: 0
+    m_CycleOffset: 0
+    m_HasAdditiveReferencePose: 0
+    m_LoopTime: 0
+    m_LoopBlend: 0
+    m_LoopBlendOrientation: 0
+    m_LoopBlendPositionY: 0
+    m_LoopBlendPositionXZ: 0
+    m_KeepOriginalOrientation: 0
+    m_KeepOriginalPositionY: 1
+    m_KeepOriginalPositionXZ: 0
+    m_HeightFromFeet: 0
+    m_Mirror: 0
+  m_EditorCurves: []
+  m_EulerEditorCurves: []
+  m_HasGenericRootTransform: 0
+  m_HasMotionFloatCurves: 0
+  m_Events: []
