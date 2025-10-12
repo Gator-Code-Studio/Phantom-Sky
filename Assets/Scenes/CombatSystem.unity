@@ -701,8 +701,8 @@ Transform:
   m_GameObject: {fileID: 508915824}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.01, y: 0.000000014901, z: 0}
-  m_LocalScale: {x: 0.0592, y: 0.03, z: 1}
+  m_LocalPosition: {x: -0.01, y: -0.01, z: 0}
+  m_LocalScale: {x: 0.47458407, y: 0.16911034, z: 1.1598551}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 76635426}
@@ -1165,7 +1165,7 @@ Transform:
   m_GameObject: {fileID: 597107293}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.99, y: 0.97, z: 0}
+  m_LocalPosition: {x: -1.463, y: 0.81, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1488,7 +1488,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1035111798}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
@@ -2232,7 +2232,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1482293994}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
@@ -2351,7 +2351,7 @@ GameObject:
   - component: {fileID: 1495754586}
   m_Layer: 0
   m_Name: EnemyHitBox
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2365,8 +2365,8 @@ Transform:
   m_GameObject: {fileID: 1495754582}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.108, y: 0.007, z: 0}
-  m_LocalScale: {x: 0.1260014, y: 0.32, z: 1}
+  m_LocalPosition: {x: 0.327, y: 0.077, z: 0}
+  m_LocalScale: {x: 0.56341785, y: 0.32350454, z: 1.0109518}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1560732254}
@@ -2684,7 +2684,7 @@ Transform:
   m_GameObject: {fileID: 1560732252}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.553, y: 0.202, z: 0}
+  m_LocalPosition: {x: -0.966, y: 0.166, z: 0}
   m_LocalScale: {x: 0.6032108, y: 0.7128734, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2815,8 +2815,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   player: {fileID: 597107298}
-  moveSpeed: 0.8
-  attackRange: 0.01
+  moveSpeed: 0
+  attackRange: 2
   attackHitbox: {fileID: 1495754585}
 --- !u!1 &1972816476
 GameObject:

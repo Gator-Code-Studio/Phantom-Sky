@@ -30,6 +30,9 @@ public class Health : MonoBehaviour, IDamageable
 
         hp -= Mathf.Max(1, amount);
 
+        if (isPlayer) Debug.Log($"PLAYER HIT! HP now {hp}");
+        else Debug.Log($"{name} hit! HP now {hp}");
+
         if (hp > 0)
         {
             if (anim) anim.SetTrigger("Hurt");
@@ -55,12 +58,22 @@ public class Health : MonoBehaviour, IDamageable
     {
         if (anim) anim.SetBool("Dead", true);
 
-        foreach (var c in cols) c.enabled = false;
+        foreach (var c in GetComponentsInChildren<Collider2D>(true))
+            c.enabled = false;
 
         if (rb != null)
         {
             rb.linearVelocity = Vector2.zero;
-            rb.bodyType = RigidbodyType2D.Static;  // freeze in place
+            rb.bodyType = RigidbodyType2D.Kinematic;  
+        }
+
+        if (isPlayer)
+        {
+            var move = GetComponent<PlayerMovement>();
+            if (move) move.enabled = false;
+
+            var attack = GetComponent<PlayerAttack>();
+            if (attack) attack.enabled = false;
         }
 
         if (deathVFX) Instantiate(deathVFX, transform.position, Quaternion.identity);
