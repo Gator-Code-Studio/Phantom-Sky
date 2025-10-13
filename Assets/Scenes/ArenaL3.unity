@@ -2615,6 +2615,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bat 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1595381035291304387, guid: 2cbf539975b694d44ae80069bbafcf34, type: 3}
+      propertyPath: m_TagString
+      value: Boss
+      objectReference: {fileID: 0}
     - target: {fileID: 2414492096744710033, guid: 2cbf539975b694d44ae80069bbafcf34, type: 3}
       propertyPath: moveSpeed
       value: 1
