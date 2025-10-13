@@ -8,6 +8,8 @@ TagManager:
   - Enemy
   - Ladder
   - Audio
+  - SpawnPoint
+  - Boss
   layers:
   - Default
   - TransparentFX

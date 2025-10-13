@@ -73,6 +73,15 @@ public class Health : MonoBehaviour, IDamageable
 
     private void Die()
     {
+
+        SpawnOnDeath spawner = GetComponent<SpawnOnDeath>();
+        if (spawner != null)
+        {
+            spawner.SpawnPrefab();
+        }
+
+        if (anim) anim.SetBool("Dead", true);
+        
         if (anim) anim.SetBool("Dead", true);
 
         foreach (var c in GetComponentsInChildren<Collider2D>(true))
@@ -111,5 +120,12 @@ public class Health : MonoBehaviour, IDamageable
         {
             canChase = true;
         }
+    }
+    
+    public void HealToFull()
+    {
+        hp = maxHP;
+        Debug.Log("Player healed to full health!");
+        // If you have a health bar UI, you would update it here as well.
     }
 }

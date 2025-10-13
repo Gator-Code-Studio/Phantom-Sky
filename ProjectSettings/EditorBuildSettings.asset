@@ -15,7 +15,13 @@ EditorBuildSettings:
     path: Assets/Scenes/ArenaL2.unity
     guid: 61de0a0283d1e5e4da2d8ece13ad641f
   - enabled: 1
-    path: Assets/Scenes/BossArena.unity
+    path: Assets/Scenes/ArenaL3.unity
+    guid: 486ef40f249cb204a9cc17d9fe27af9e
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 7ad438cbd8e78b84789efbaf99b5a43c
+  - enabled: 1
+    path: Assets/Scenes/ArenaL4.unity
     guid: 087b2c8f22893e14485f4d3ef3da8cff
   m_configObjects:
     com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f, type: 2}
