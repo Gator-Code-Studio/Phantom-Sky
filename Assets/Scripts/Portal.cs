@@ -11,6 +11,11 @@ public class Portal : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.CompareTag("Boss"))
+        {
+            return;
+        }
+
         if (portalObjects.Contains(collision.gameObject))
         {
             return;

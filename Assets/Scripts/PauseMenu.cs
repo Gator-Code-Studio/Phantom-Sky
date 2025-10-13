@@ -15,20 +15,29 @@ public class PauseMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            container.SetActive(true);
-            Time.timeScale = 0; // time stop
+            // Toggles the pause menu on/off
+            if (container.activeSelf)
+            {
+                ResumeButton();
+            }
+            else
+            {
+                container.SetActive(true);
+                Time.timeScale = 0;
+            }
         }
     }
 
     public void RestartButton()
     {
-        SceneManager.LoadScene("SampleScene");
+        Time.timeScale = 1;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     
     public void ResumeButton()
     {
         container.SetActive(false);
-        Time.timeScale = 1; // time resume
+        Time.timeScale = 1;
     }
 
     public void MainMenuButton()
