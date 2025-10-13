@@ -25,6 +25,7 @@ public class Health : MonoBehaviour, IDamageable
     {
         hp = maxHP;
         anim = GetComponent<Animator>();
+        cols = GetComponentsInChildren<Collider2D>(true);
         rb = GetComponent<Rigidbody2D>();
         cols = GetComponentsInChildren<Collider2D>(true);
     }
@@ -45,6 +46,9 @@ public class Health : MonoBehaviour, IDamageable
         if (invuln || hp <= 0) return;
 
         hp -= Mathf.Max(1, amount);
+
+        if (isPlayer) Debug.Log($"PLAYER HIT! HP now {hp}");
+        else Debug.Log($"{name} hit! HP now {hp}");
 
         if (hp > 0)
         {
@@ -71,7 +75,8 @@ public class Health : MonoBehaviour, IDamageable
     {
         if (anim) anim.SetBool("Dead", true);
 
-        foreach (var c in cols) c.enabled = false;
+        foreach (var c in GetComponentsInChildren<Collider2D>(true))
+            c.enabled = false;
 
         if (rb != null)
         {
@@ -83,6 +88,16 @@ public class Health : MonoBehaviour, IDamageable
         foreach (var script in scripts)
         {
             if (script != this) script.enabled = false;
+            rb.bodyType = RigidbodyType2D.Kinematic;  
+        }
+
+        if (isPlayer)
+        {
+            var move = GetComponent<PlayerMovement>();
+            if (move) move.enabled = false;
+
+            var attack = GetComponent<PlayerAttack>();
+            if (attack) attack.enabled = false;
         }
 
         if (deathVFX) Instantiate(deathVFX, transform.position, Quaternion.identity);
