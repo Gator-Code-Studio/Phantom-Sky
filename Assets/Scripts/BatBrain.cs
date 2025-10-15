@@ -4,7 +4,8 @@ public class BatBrain : MonoBehaviour
 {
     [Header("Refs")]
     public Animator anim;                     
-    public EnemyAttackHitbox attackHitbox;   
+    public EnemyAttackHitbox attackHitbox;
+    private AudioManager audioManager;
 
     [Header("Targeting")]
     public Transform target;                  
@@ -39,6 +40,7 @@ public class BatBrain : MonoBehaviour
         if (!anim) anim = GetComponentInChildren<Animator>();
         sr = GetComponentInChildren<SpriteRenderer>();
         perchPos = transform.position;
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
     }
 
     void Update()
@@ -83,6 +85,8 @@ public class BatBrain : MonoBehaviour
         if (target && dist <= attackRange && cooldown <= 0f)
         {
             anim.SetTrigger("Attack");
+            audioManager.PlaySFX(audioManager.batSFX);
+
             cooldown = attackCooldown;
             desiredVel = Vector2.zero; 
         }

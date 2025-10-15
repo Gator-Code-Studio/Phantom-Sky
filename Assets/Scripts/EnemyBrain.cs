@@ -3,9 +3,10 @@ using UnityEngine;
 public class EnemyBrain : MonoBehaviour
 {
     public Transform player;
-    public float moveSpeed = 0.8f;
+    public float moveSpeed = 0f;
     public float attackRange = 0.01f;
     public EnemyAttackHitbox attackHitbox;
+    public float attackCooldown = 1.0f; 
 
     [Header("Trigger Settings")]
     public Collider2D chaseTrigger;
@@ -14,12 +15,16 @@ public class EnemyBrain : MonoBehaviour
     private Health health;
     private Rigidbody2D rb;
     private bool canChase = false;
+    private AudioManager audioManager;
+    private bool isAttacking = false;
+    private float lastAttackTime;
 
     void Start()
     {
         animator = GetComponent<Animator>();
         health = GetComponent<Health>();
         rb = GetComponent<Rigidbody2D>();
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
 
         if (chaseTrigger != null)
         {
@@ -50,9 +55,18 @@ public class EnemyBrain : MonoBehaviour
         }
 
         float distanceToPlayer = Mathf.Abs(player.position.x - transform.position.x);
-        if (distanceToPlayer <= attackRange && animator != null)
+        if (distanceToPlayer <= attackRange && animator != null && !isAttacking)
         {
             animator.SetTrigger("Attack");
+            audioManager.PlaySFX(audioManager.enemySFX);
+            isAttacking = true;
+            lastAttackTime = Time.time;
+        }
+
+       
+        if (isAttacking && Time.time - lastAttackTime >= attackCooldown)
+        {
+            isAttacking = false;
         }
     }
 

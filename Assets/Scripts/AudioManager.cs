@@ -12,6 +12,10 @@ public class AudioManager : MonoBehaviour
     public AudioClip sword;
     public AudioClip jump;
     public AudioClip land;
+    public AudioClip explodeSFX;
+    public AudioClip followSFX;
+    public AudioClip batSFX;
+    public AudioClip enemySFX;
 
     private void Awake()
     {
