@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -48,6 +47,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform wallCheck;
     [SerializeField] private LayerMask wallLayer;
     [SerializeField] private Animator animator;
+    [SerializeField] private float moveSpeed=10f;
 
     // Animator state
     private bool isRunning;
@@ -58,6 +58,7 @@ public class PlayerMovement : MonoBehaviour
 
 
     AudioManager audioManager;
+
     private void Awake()
     {
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
@@ -66,10 +67,10 @@ public class PlayerMovement : MonoBehaviour
     {
         bool grounded = IsGrounded();
 
-        
+
         if (grounded && !wasGrounded)
         {
-          audioManager.PlaySFX(audioManager.land);
+            audioManager.PlaySFX(audioManager.land);
         }
 
         wasGrounded = grounded;
@@ -149,9 +150,7 @@ public class PlayerMovement : MonoBehaviour
             Flip();
         }
 
-        movingKeyPressed =
-            Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) ||
-            Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow);
+        movingKeyPressed = Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow);
 
         isRunning = movingKeyPressed && IsGrounded() && !isDashing && !isWallSliding;
         isJumping = !IsGrounded() && rb.linearVelocity.y > 0f || isWallJumping;
@@ -179,7 +178,22 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("isDashing", isDashing);
             animator.SetBool("isWallSliding", isWallSliding);
         }
+
+
+        float horizontalInput = Input.GetAxis("Horizontal");
+        rb.AddForce(new Vector2(horizontalInput*Time.deltaTime * moveSpeed, 0f));
+        
+
+
     }
+
+
+
+
+
+
+
+   
 
     public bool IsFacingRight()
     {
@@ -229,7 +243,7 @@ public class PlayerMovement : MonoBehaviour
         Console.Write("IsWalled");
         return Physics2D.OverlapCircle(wallCheck.position, 0.01f, wallLayer);
     }
-    
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
@@ -247,7 +261,7 @@ public class PlayerMovement : MonoBehaviour
                 rb.linearVelocity.x,
                 Mathf.Clamp(rb.linearVelocity.y, -wallSlidingSpeed, float.MaxValue)
             );
-            
+
         }
         else
         {

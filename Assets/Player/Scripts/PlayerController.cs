@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
         if (Keyboard.current.spaceKey.wasPressedThisFrame)
         {
             rb.AddForce(Vector2.up * jumpHeight, ForceMode2D.Impulse);
-        }
+        } 
 
         WallSlideCheck();
     }
