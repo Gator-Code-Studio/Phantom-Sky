@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class AudioManager : MonoBehaviour
 {
@@ -19,7 +20,7 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
-        // enforce singleton
+        // Enforce singleton
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -43,7 +44,15 @@ public class AudioManager : MonoBehaviour
     {
         if (clip != null && SFXSource != null)
         {
+            SFXSource.pitch = Random.Range(0.707f, 1.414f);
             SFXSource.PlayOneShot(clip);
+            StartCoroutine(ResetPitchAfterDelay(clip.length));
         }
+    }
+
+    private IEnumerator ResetPitchAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SFXSource.pitch = 1f;
     }
 }
