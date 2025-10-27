@@ -32,9 +32,6 @@ public class Health : MonoBehaviour, IDamageable
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-            TakeHit(1);
-
         if (canChase && !isPlayer && hp > 0 && player != null)
         {
             transform.position = Vector2.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
