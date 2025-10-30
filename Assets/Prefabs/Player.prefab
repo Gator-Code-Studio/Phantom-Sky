@@ -420,6 +420,9 @@ MonoBehaviour:
   isPlayer: 1
   hurtInvulnTime: 0.3
   deathVFX: {fileID: 0}
+  canChase: 0
+  player: {fileID: 0}
+  speed: 3
 --- !u!114 &2565810481876646633
 MonoBehaviour:
   m_ObjectHideFlags: 0

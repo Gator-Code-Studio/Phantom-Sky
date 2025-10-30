@@ -56,7 +56,6 @@ public class PlayerMovement : MonoBehaviour
     private bool isJumpingDown;
     private bool movingKeyPressed;
 
-
     AudioManager audioManager;
     private void Awake()
     {
@@ -66,10 +65,9 @@ public class PlayerMovement : MonoBehaviour
     {
         bool grounded = IsGrounded();
 
-        
         if (grounded && !wasGrounded)
         {
-          audioManager.PlaySFX(audioManager.land);
+            audioManager.PlaySFX(audioManager.land);
         }
 
         wasGrounded = grounded;
@@ -87,7 +85,7 @@ public class PlayerMovement : MonoBehaviour
             coyoteTimeCounter = coyoteTime;
             if (!wasGrounded)
             {
-                doubleJump = false; // reset only when you just landed
+                doubleJump = false;
             }
         }
         else
@@ -192,17 +190,14 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
-        // Only control horizontal movement if we are NOT wall jumping
         if (!isWallJumping)
         {
             if (movingKeyPressed && !isWallSliding)
             {
-                // Apply movement if keys are pressed
                 rb.linearVelocity = new Vector2(horizontal * speed, rb.linearVelocity.y);
             }
             else
             {
-                // Stop movement if no keys are pressed
                 rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
             }
         }
@@ -229,14 +224,12 @@ public class PlayerMovement : MonoBehaviour
         Console.Write("IsWalled");
         return Physics2D.OverlapCircle(wallCheck.position, 0.01f, wallLayer);
     }
-    
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(wallCheck.position, 0.2f);
-
     }
-
 
     private void WallSlide()
     {
@@ -247,7 +240,6 @@ public class PlayerMovement : MonoBehaviour
                 rb.linearVelocity.x,
                 Mathf.Clamp(rb.linearVelocity.y, -wallSlidingSpeed, float.MaxValue)
             );
-            
         }
         else
         {
@@ -286,6 +278,12 @@ public class PlayerMovement : MonoBehaviour
                 localScale.x *= -1f;
                 transform.localScale = localScale;
             }
+
+            if (PlayerActionReporter.Instance != null)
+            {
+                PlayerActionReporter.Instance.ReportWallJump();
+            }
+
             Invoke(nameof(StopWallJumping), wallJumpingDuraction);
         }
     }

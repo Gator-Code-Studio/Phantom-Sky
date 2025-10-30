@@ -5,7 +5,7 @@ public class MainMenu : MonoBehaviour
 {
     public void StartGame()
     {
-        SceneManager.LoadScene("ArenaL1");
+        SceneLoader.LoadNextScene();
     }
 
     public void QuitGame()
