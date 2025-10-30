@@ -6,7 +6,7 @@ public class EnemyBrain : MonoBehaviour
     public float moveSpeed = 0f;
     public float attackRange = 0.01f;
     public EnemyAttackHitbox attackHitbox;
-    public float attackCooldown = 1.0f; 
+    public float attackCooldown = 1.0f;
 
     [Header("Trigger Settings")]
     public Collider2D chaseTrigger;
@@ -18,6 +18,7 @@ public class EnemyBrain : MonoBehaviour
     private AudioManager audioManager;
     private bool isAttacking = false;
     private float lastAttackTime;
+    private bool reportedDeath = false;
 
     void Start()
     {
@@ -29,8 +30,6 @@ public class EnemyBrain : MonoBehaviour
         if (chaseTrigger != null)
         {
             chaseTrigger.isTrigger = true;
-
-            // Add a trigger relay if the trigger is a different object
             TriggerRelay relay = chaseTrigger.gameObject.AddComponent<TriggerRelay>();
             relay.enemyBrain = this;
         }
@@ -39,8 +38,21 @@ public class EnemyBrain : MonoBehaviour
     void Update()
     {
         if (player == null || health == null) return;
+
+        // Detect and report death once
+        if (health.hp <= 0 && !reportedDeath)
+        {
+            reportedDeath = true;
+            Debug.Log("[EnemyBrain] Enemy died — reporting kill.");
+            if (PlayerActionReporter.Instance != null)
+            {
+                PlayerActionReporter.Instance.ReportEnemyKilled();
+            }
+        }
+
         if (health.hp <= 0 || rb == null || !rb.simulated || !canChase) return;
 
+        // Movement toward player
         Vector2 targetPosition = new Vector2(player.position.x, transform.position.y);
         transform.position = Vector2.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
 
@@ -54,6 +66,7 @@ public class EnemyBrain : MonoBehaviour
             );
         }
 
+        // Attack logic
         float distanceToPlayer = Mathf.Abs(player.position.x - transform.position.x);
         if (distanceToPlayer <= attackRange && animator != null && !isAttacking)
         {
@@ -63,7 +76,6 @@ public class EnemyBrain : MonoBehaviour
             lastAttackTime = Time.time;
         }
 
-       
         if (isAttacking && Time.time - lastAttackTime >= attackCooldown)
         {
             isAttacking = false;

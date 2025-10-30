@@ -2,24 +2,19 @@ using UnityEngine;
 
 public class Health : MonoBehaviour, IDamageable
 {
-    [Header("Health")]
-    public int maxHP = 5;
-    public bool isPlayer = false;           
-    public float hurtInvulnTime = 0.3f;     
+    [Header("Health")] [SerializeField] int maxHP = 5;
+    public bool isPlayer = false;
+    public float hurtInvulnTime = 0.3f;
     public float hp { get; private set; }
     private bool invuln;
-
-    [Header("Death")]
-    public GameObject deathVFX;             
-
+    [Header("Death")] public GameObject deathVFX;
     private Animator anim;
     private Collider2D[] cols;
     private Rigidbody2D rb;
-
-    [Header("Enemy Behavior")]
-    public bool canChase = false;
+    [Header("Enemy Behavior")] public bool canChase = false;
     public Transform player;
     public float speed = 3f;
+    private bool reportedKill;
 
     void Awake()
     {
@@ -32,9 +27,7 @@ public class Health : MonoBehaviour, IDamageable
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-            TakeHit(1);
-
+        if (Input.GetKeyDown(KeyCode.E)) TakeHit(1);
         if (canChase && !isPlayer && hp > 0 && player != null)
         {
             transform.position = Vector2.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
@@ -44,12 +37,9 @@ public class Health : MonoBehaviour, IDamageable
     public void TakeHit(int amount)
     {
         if (invuln || hp <= 0) return;
-
         hp -= Mathf.Max(1, amount);
-
         if (isPlayer) Debug.Log($"PLAYER HIT! HP now {hp}");
         else Debug.Log($"{name} hit! HP now {hp}");
-
         if (hp > 0)
         {
             if (anim) anim.SetTrigger("Hurt");
@@ -73,7 +63,6 @@ public class Health : MonoBehaviour, IDamageable
 
     private void Die()
     {
-
         SpawnOnDeath spawner = GetComponent<SpawnOnDeath>();
         if (spawner != null)
         {
@@ -81,12 +70,7 @@ public class Health : MonoBehaviour, IDamageable
         }
 
         if (anim) anim.SetBool("Dead", true);
-        
-        if (anim) anim.SetBool("Dead", true);
-
-        foreach (var c in GetComponentsInChildren<Collider2D>(true))
-            c.enabled = false;
-
+        foreach (var c in GetComponentsInChildren<Collider2D>(true)) c.enabled = false;
         if (rb != null)
         {
             rb.linearVelocity = Vector2.zero;
@@ -97,20 +81,24 @@ public class Health : MonoBehaviour, IDamageable
         foreach (var script in scripts)
         {
             if (script != this) script.enabled = false;
-            rb.bodyType = RigidbodyType2D.Kinematic;  
+            rb.bodyType = RigidbodyType2D.Kinematic;
         }
 
         if (isPlayer)
         {
             var move = GetComponent<PlayerMovement>();
             if (move) move.enabled = false;
-
             var attack = GetComponent<PlayerAttack>();
             if (attack) attack.enabled = false;
         }
 
-        if (deathVFX) Instantiate(deathVFX, transform.position, Quaternion.identity);
+        if (!isPlayer && !reportedKill)
+        {
+            reportedKill = true;
+            if (PlayerActionReporter.Instance != null) PlayerActionReporter.Instance.ReportEnemyKilled();
+        }
 
+        if (deathVFX) Instantiate(deathVFX, transform.position, Quaternion.identity);
         if (!isPlayer) Destroy(gameObject, 0.75f);
     }
 
@@ -121,7 +109,7 @@ public class Health : MonoBehaviour, IDamageable
             canChase = true;
         }
     }
-    
+
     public void HealToFull()
     {
         hp = maxHP;

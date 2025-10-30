@@ -1,3 +1,4 @@
+// CollectableItem.cs
 using UnityEngine;
 
 public class CollectableItem : MonoBehaviour
@@ -6,17 +7,19 @@ public class CollectableItem : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (!collision.CompareTag("Player")) { return; }
+
+        itemsCollected = itemsCollected + 1;
+        Debug.Log("Item collected! Total items: " + itemsCollected);
+
+        if (PlayerActionReporter.Instance != null)
         {
-            itemsCollected += 1;
-
-            Debug.Log("Item collected! Total items: " + itemsCollected);
-            
-
-            Destroy(gameObject);
+            PlayerActionReporter.Instance.ReportCollectiblePicked();
         }
+
+        Destroy(gameObject);
     }
-    
+
     public static void ResetItemCount()
     {
         itemsCollected = 0;

@@ -2765,6 +2765,9 @@ MonoBehaviour:
   isPlayer: 0
   hurtInvulnTime: 0.3
   deathVFX: {fileID: 0}
+  canChase: 0
+  player: {fileID: 0}
+  speed: 3
 --- !u!61 &1560732256
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2876,6 +2879,7 @@ MonoBehaviour:
   moveSpeed: 0.8
   attackRange: 0.01
   attackHitbox: {fileID: 1495754585}
+  chaseTrigger: {fileID: 0}
 --- !u!1 &1635904026
 GameObject:
   m_ObjectHideFlags: 0

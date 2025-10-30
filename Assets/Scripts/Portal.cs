@@ -1,31 +1,33 @@
-using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Portal : MonoBehaviour
 {
     private HashSet<GameObject> portalObjects = new HashSet<GameObject>();
-
     [SerializeField] private Transform destination;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Boss"))
-        {
-            return;
-        }
+        if (collision.CompareTag("Boss")) { return; }
+        bool isPlayer = collision.CompareTag("Player");
 
-        if (portalObjects.Contains(collision.gameObject))
-        {
-            return;
-        }
+        if (portalObjects.Contains(collision.gameObject)) { return; }
 
-        if (destination.TryGetComponent(out Portal destinationPortal))
+        if (destination != null)
         {
-            destinationPortal.portalObjects.Add(collision.gameObject);
+            Portal destinationPortal;
+            if (destination.TryGetComponent(out destinationPortal))
+            {
+                destinationPortal.portalObjects.Add(collision.gameObject);
+            }
+
+            collision.transform.position = destination.position;
+
+            if (isPlayer && PlayerActionReporter.Instance != null)
+            {
+                PlayerActionReporter.Instance.ReportPortalUsed();
+            }
         }
-        collision.transform.position = destination.position;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
