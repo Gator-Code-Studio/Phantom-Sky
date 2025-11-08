@@ -7,25 +7,22 @@ public class Shuriken : MonoBehaviour
     public float maxTravel = 8f;
 
     [Header("Fade")]
-
-    // Start fading away this far
     public float fadeDistance = 2f;
 
     private Vector3 _startPos;
     private int _dir = 1;
     private SpriteRenderer _sr;
     private Rigidbody2D _rb;
-
     private Color _baseColor;
 
     public void Fire(int direction)
     {
-        _dir = Mathf.Sign(direction) >= 0 ? 1 : -1;
-        _startPos = transform.position;        
+        if (Mathf.Sign(direction) >= 0) { _dir = 1; }
+        else { _dir = -1; }
+        _startPos = transform.position;
         ResetVisual();
-        
     }
-   
+
     void Awake()
     {
         _sr = GetComponent<SpriteRenderer>();
@@ -50,7 +47,7 @@ public class Shuriken : MonoBehaviour
         if (_sr != null && d > maxTravel - fadeDistance)
         {
             float t = Mathf.InverseLerp(maxTravel, maxTravel - fadeDistance, d);
-            var c = _baseColor;    
+            var c = _baseColor;
             c.a = Mathf.Clamp01(1f - t);
             _sr.color = c;
         }
@@ -60,19 +57,22 @@ public class Shuriken : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player")) return;
+        if (other.CompareTag("Player")) { return; }
 
-        var damageable = other.GetComponent<IDamageable>();
+        var damageable = other.GetComponentInParent<IDamageable>();
         if (damageable != null)
         {
-            damageable.TakeHit(1);  
+            damageable.TakeHit(1);
+            Destroy(gameObject);
+            return;
         }
 
+        if (other.isTrigger) { return; } 
         Destroy(gameObject);
     }
 
     private void ResetVisual()
     {
-        if (_sr != null) _sr.color = _baseColor;  
+        if (_sr != null) _sr.color = _baseColor;
     }
 }
