@@ -6911,15 +6911,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1957622902333013856, guid: c762d59ff2e33b64cb6be2b2b332a6f6, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1957622902333013856, guid: c762d59ff2e33b64cb6be2b2b332a6f6, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1957622902333013856, guid: c762d59ff2e33b64cb6be2b2b332a6f6, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1957622902333013856, guid: c762d59ff2e33b64cb6be2b2b332a6f6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6951,11 +6951,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1957622902333013856, guid: c762d59ff2e33b64cb6be2b2b332a6f6, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 628
+      value: 631
       objectReference: {fileID: 0}
     - target: {fileID: 1957622902333013856, guid: c762d59ff2e33b64cb6be2b2b332a6f6, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 355
+      value: 725
       objectReference: {fileID: 0}
     - target: {fileID: 1957622902333013856, guid: c762d59ff2e33b64cb6be2b2b332a6f6, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -6975,11 +6975,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3009628969641214684, guid: c762d59ff2e33b64cb6be2b2b332a6f6, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 253
+      value: 563
       objectReference: {fileID: 0}
     - target: {fileID: 3009628969641214684, guid: c762d59ff2e33b64cb6be2b2b332a6f6, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 653
+      value: 486
       objectReference: {fileID: 0}
     - target: {fileID: 4671229394181725546, guid: c762d59ff2e33b64cb6be2b2b332a6f6, type: 3}
       propertyPath: m_Name
@@ -6989,17 +6989,21 @@ PrefabInstance:
       propertyPath: playerHealth
       value: 
       objectReference: {fileID: 1310110092}
+    - target: {fileID: 8359692116689991471, guid: c762d59ff2e33b64cb6be2b2b332a6f6, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8549599058005410324, guid: c762d59ff2e33b64cb6be2b2b332a6f6, type: 3}
       propertyPath: m_SizeDelta.x
       value: 860
       objectReference: {fileID: 0}
     - target: {fileID: 8549599058005410324, guid: c762d59ff2e33b64cb6be2b2b332a6f6, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 254
+      value: 563
       objectReference: {fileID: 0}
     - target: {fileID: 8549599058005410324, guid: c762d59ff2e33b64cb6be2b2b332a6f6, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 653
+      value: 486
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
