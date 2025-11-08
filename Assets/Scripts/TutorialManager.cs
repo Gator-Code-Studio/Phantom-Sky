@@ -185,8 +185,8 @@ public class TutorialManager : MonoBehaviour
         steps.Add(new Step { type = StepType.KillEnemy, message = "Kill the enemy." });
         steps.Add(new Step { type = StepType.WallJump, message = "Press Space while touching a wall to wall jump." });
         steps.Add(new Step { type = StepType.JumpPad, message = "Use the jump pad to launch upward. Avoid the spikes." });
-        steps.Add(new Step { type = StepType.UsePortal, message = "Enter the portal to collect the item." });
-        steps.Add(new Step { type = StepType.CollectItem, message = "Collect the item." });
+        steps.Add(new Step { type = StepType.UsePortal, message = "Enter the portal to collect the keys." });
+        steps.Add(new Step { type = StepType.CollectItem, message = "Collect the keys to proceed." });
         steps.Add(new Step { type = StepType.UseTeleporter, message = "Go through this teleporter to proceed to the next level." });
     }
 }

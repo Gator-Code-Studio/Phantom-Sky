@@ -2565,6 +2565,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1310110125}
   m_SourcePrefab: {fileID: 100100000, guid: e43a19d8c3807e8409469561bc2da61f, type: 3}
+--- !u!61 &778181721 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 4179208405105399638, guid: 067bb2072fe590a4686dd72012f6b55d, type: 3}
+  m_PrefabInstance: {fileID: 1734169721}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &881449585
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5984,6 +5989,7 @@ GameObject:
   - component: {fileID: 2137558871}
   - component: {fileID: 2137558870}
   - component: {fileID: 2137558869}
+  - component: {fileID: 2137558872}
   m_Layer: 0
   m_Name: Samurai2
   m_TagString: Untagged
@@ -6086,6 +6092,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2137558872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2137558868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dd24e4e851699c4e87dcf40afb67bbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyBrain
+  player: {fileID: 511685159}
+  moveSpeed: 1
+  attackRange: 0.01
+  attackHitbox: {fileID: 0}
+  attackCooldown: 1
+  chaseTrigger: {fileID: 778181721}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

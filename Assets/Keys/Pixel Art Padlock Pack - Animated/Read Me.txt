@@ -1,0 +1,51 @@
+12 different padlocks!
+
+Every one is ANIMATED!
+
+Every padlock comes in multiple colors.
+
+
+Individual padlocks:
+Extending Padlock
+ - Size: 33x25
+ 
+Triangle Padlock
+ - Size: 20x33
+
+Round Padlock
+ - Size: 20x36
+
+Sturdy Padlock
+ - Size: 20x30
+
+Hefty Padlock
+ - Size: 24x33
+
+Robust Padlock
+ - Size: 20x31
+
+Old Padlock
+ - Size: 24x32
+
+Shield-like Padlock
+ - Size: 14x27
+
+Small Square Padlock
+ - Size: 14x20
+
+Small Sturdy Padlock
+ - Size: 16x22
+
+Small Oval Padlock
+ - Size: 16x23
+
+Small Round Padlock
+ - Size: 16x23
+
+
+
+
+
+
+
+

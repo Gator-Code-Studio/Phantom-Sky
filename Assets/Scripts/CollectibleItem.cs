@@ -5,6 +5,9 @@ public class CollectableItem : MonoBehaviour
 {
     public static int itemsCollected = 0;
 
+    [SerializeField] private GameObject objectToDestroy;
+    [SerializeField] private int keysNeeded = 1;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!collision.CompareTag("Player")) { return; }
@@ -15,6 +18,11 @@ public class CollectableItem : MonoBehaviour
         if (PlayerActionReporter.Instance != null)
         {
             PlayerActionReporter.Instance.ReportCollectiblePicked();
+        }
+
+        if (objectToDestroy != null && itemsCollected >= keysNeeded)
+        {
+            Destroy(objectToDestroy);
         }
 
         Destroy(gameObject);
