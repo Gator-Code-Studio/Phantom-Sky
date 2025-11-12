@@ -86,7 +86,7 @@ public class WitchBrain : MonoBehaviour
         Rigidbody2D playerRb = player.GetComponent<Rigidbody2D>();
         if (playerRb != null)
         {
-            predictedPos += playerRb.velocity * predictionTime;
+            predictedPos += playerRb.linearVelocity * predictionTime;
         }
 
         // Target: always above player with smooth sine bob
@@ -116,7 +116,7 @@ public class WitchBrain : MonoBehaviour
         GameObject proj = Instantiate(flameProjectilePrefab, firePoint.position, firePoint.rotation);
         Rigidbody2D prb = proj.GetComponent<Rigidbody2D>();
         Vector2 dir = (player.position - firePoint.position).normalized;
-        prb.velocity = dir * projectileSpeed;
+        prb.linearVelocity = dir * projectileSpeed;
         Destroy(proj, 3f);
     }
 
@@ -134,7 +134,7 @@ public class WitchBrain : MonoBehaviour
         float bobOffset = Mathf.Sin(bobTimer + Mathf.PI * 0.25f) * hoverHeightVariance * 0.7f;
         Vector2 predictedPos = (Vector2)player.position;
         Rigidbody2D playerRb = player.GetComponent<Rigidbody2D>();
-        if (playerRb != null) predictedPos += playerRb.velocity * predictionTime;
+        if (playerRb != null) predictedPos += playerRb.linearVelocity * predictionTime;
 
         Vector2 targetPos = new Vector2(predictedPos.x, predictedPos.y + hoverHeight + bobOffset);
 
