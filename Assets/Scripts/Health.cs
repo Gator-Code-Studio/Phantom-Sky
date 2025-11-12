@@ -69,6 +69,8 @@ public class Health : MonoBehaviour, IDamageable
             spawner.SpawnPrefab();
         }
 
+
+
         if (anim) anim.SetBool("Dead", true);
         foreach (var c in GetComponentsInChildren<Collider2D>(true)) c.enabled = false;
         if (rb != null)
@@ -99,7 +101,23 @@ public class Health : MonoBehaviour, IDamageable
         }
 
         if (deathVFX) Instantiate(deathVFX, transform.position, Quaternion.identity);
-        if (!isPlayer) Destroy(gameObject, 0.75f);
+        
+        var respawn = GetComponent<EnemyRespawn>();
+        if (respawn != null && respawn.enemyPrefab != null)
+        {
+            respawn.Respawn();
+            Destroy(gameObject, respawn.respawnTime + 0.1f);
+        }
+        else
+        {
+            Destroy(gameObject, 0.75f);
+        }
+        
+        foreach (var c in GetComponentsInChildren<Collider2D>(true)) c.enabled = false;
+        if (rb != null) { rb.linearVelocity = Vector2.zero; rb.simulated = false; }
+        
+
+
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -109,6 +127,33 @@ public class Health : MonoBehaviour, IDamageable
             canChase = true;
         }
     }
+    
+    void OnEnable()
+    {
+        hp = maxHP;
+        invuln = false;
+        reportedKill = false;
+
+        if (anim == null) { anim = GetComponent<Animator>(); }
+        if (rb == null) { rb = GetComponent<Rigidbody2D>(); }
+        cols = GetComponentsInChildren<Collider2D>(true);
+
+        foreach (var c in cols) { c.enabled = true; }
+        if (rb != null)
+        {
+            rb.simulated = true;
+            rb.bodyType = RigidbodyType2D.Dynamic;
+            rb.linearVelocity = Vector2.zero;
+        }
+        if (anim != null)
+        {
+            anim.enabled = true;
+            anim.SetBool("Dead", false);
+            anim.Rebind();
+            anim.Update(0f);
+        }
+    }
+
 
     public void HealToFull()
     {
