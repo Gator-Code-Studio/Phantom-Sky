@@ -20,13 +20,14 @@ public class WitchBrain : MonoBehaviour
 
     private Rigidbody2D rb;
     private float nextAttackTime = 0f;
-    private bool shouldMove = false; 
+    private bool shouldMove = false;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Kinematic;
         rb.gravityScale = 0f;
+
         if (anim == null) anim = GetComponent<Animator>();
         if (player == null) player = GameObject.FindGameObjectWithTag("Player")?.transform;
         if (firePoint == null) firePoint = transform.Find("FirePoint");
@@ -51,7 +52,7 @@ public class WitchBrain : MonoBehaviour
         }
     }
 
-    void FixedUpdate() 
+    void FixedUpdate()
     {
         if (!shouldMove || player == null) return;
 
@@ -69,10 +70,13 @@ public class WitchBrain : MonoBehaviour
     void SetAttackState()
     {
         anim.SetBool("move", false);
+
         if (Time.time >= nextAttackTime)
         {
             anim.SetTrigger("attack");
             nextAttackTime = Time.time + attackCooldown;
+
+            // Delay spawn to sync with animation
             Invoke(nameof(SpawnFlame), 0.4f);
         }
     }
@@ -80,12 +84,25 @@ public class WitchBrain : MonoBehaviour
     void SpawnFlame()
     {
         if (flameProjectilePrefab == null || firePoint == null) return;
+
         GameObject proj = Instantiate(flameProjectilePrefab, firePoint.position, firePoint.rotation);
+
+        // ENABLE THE HITBOX HERE
+        EnemyAttackHitbox hitbox = proj.GetComponent<EnemyAttackHitbox>();
+        if (hitbox != null)
+        {
+            hitbox.EnableHitbox();
+        }
+
+        // Rigidbody movement
         Rigidbody2D prb = proj.GetComponent<Rigidbody2D>();
         Vector2 dir = (player.position - firePoint.position).normalized;
+
         float facing = Mathf.Sign(transform.localScale.x);
         proj.transform.localScale = new Vector3(facing, 1f, 1f);
+
         prb.linearVelocity = dir * projectileSpeed;
+
         Destroy(proj, 3f);
     }
 }
