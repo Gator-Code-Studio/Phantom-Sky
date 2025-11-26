@@ -11,12 +11,18 @@ public class WitchBrain : MonoBehaviour
     public GameObject flameProjectilePrefab;
 
     [Header("Movement")]
-    public float moveSpeed = 1f;
+    public float moveSpeed = 2f;
+
+    [Header("Ranges")]
+    [Range(0.5f, 10f)]
+    public float attackRange = 1f;
+
+    [Range(0.5f, 15f)]
+    public float walkRange = 5f;
 
     [Header("Combat")]
-    public float attackRange = 1f;
     public float attackCooldown = 1.5f;
-    public float projectileSpeed = 1f;
+    public float projectileSpeed = 3f;
 
     private Rigidbody2D rb;
     private float nextAttackTime = 0f;
@@ -40,15 +46,20 @@ public class WitchBrain : MonoBehaviour
         FacePlayer();
         float distance = Vector2.Distance(transform.position, player.position);
 
-        if (distance <= attackRange)
+        if (distance <= walkRange && distance > attackRange)
+        {
+            shouldMove = true;
+            anim.SetBool("move", true);
+        }
+        else if (distance <= attackRange)
         {
             shouldMove = false;
             SetAttackState();
         }
         else
         {
-            shouldMove = true;
-            anim.SetBool("move", true);
+            shouldMove = false;
+            anim.SetBool("move", false);
         }
     }
 

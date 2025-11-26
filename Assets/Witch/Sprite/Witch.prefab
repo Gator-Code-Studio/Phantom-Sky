@@ -84,7 +84,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 815424164945274260, guid: 0b1e3e6ee3553ab4095b4425471ecd0c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
@@ -226,10 +226,11 @@ MonoBehaviour:
   player: {fileID: 0}
   firePoint: {fileID: 4431529539275644957}
   flameProjectilePrefab: {fileID: 6672154464614398494, guid: c03f23abfcb2eef408b2aa7d7681c204, type: 3}
-  moveSpeed: 1
+  moveSpeed: 2
   attackRange: 1
+  walkRange: 5
   attackCooldown: 1.5
-  projectileSpeed: 1
+  projectileSpeed: 3
 --- !u!1 &4019730714342739541
 GameObject:
   m_ObjectHideFlags: 0
