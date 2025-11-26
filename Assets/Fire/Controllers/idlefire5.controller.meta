@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 3d14c242272d3864797e61be25fafee0
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 301082
+  packageName: Pixel FX vol1- fire&smoke
+  packageVersion: 1.0
+  assetPath: Assets/PixelFX_vol1/Controllers/idlefire5.controller
+  uploadId: 706791

@@ -56,7 +56,6 @@ public class PlayerMovement : MonoBehaviour
     private bool isJumpingDown;
     private bool movingKeyPressed;
 
-
     AudioManager audioManager;
     private void Awake()
     {
@@ -66,7 +65,6 @@ public class PlayerMovement : MonoBehaviour
     {
         bool grounded = IsGrounded();
 
-        
         if (grounded && !wasGrounded)
         {
             audioManager.PlaySFX(audioManager.land);
@@ -87,7 +85,7 @@ public class PlayerMovement : MonoBehaviour
             coyoteTimeCounter = coyoteTime;
             if (!wasGrounded)
             {
-                doubleJump = false; // reset only when you just landed
+                doubleJump = false;
             }
         }
         else
@@ -192,14 +190,16 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
-
-        if (movingKeyPressed && !isWallSliding)
+        if (!isWallJumping)
         {
-            rb.linearVelocity = new Vector2(horizontal * speed, rb.linearVelocity.y);
-        }
-        else
-        {
-            rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
+            if (movingKeyPressed && !isWallSliding)
+            {
+                rb.linearVelocity = new Vector2(horizontal * speed, rb.linearVelocity.y);
+            }
+            else
+            {
+                rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
+            }
         }
     }
 
@@ -222,26 +222,24 @@ public class PlayerMovement : MonoBehaviour
     private bool IsWalled()
     {
         Console.Write("IsWalled");
-        return Physics2D.OverlapCircle(wallCheck.position, 0.2f, wallLayer);
+        return Physics2D.OverlapCircle(wallCheck.position, 0.01f, wallLayer);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(wallCheck.position, 0.2f);
     }
 
     private void WallSlide()
     {
-        if (IsWalled() && !IsGrounded() && horizontal != 0f)
+        if (IsWalled() && !IsGrounded())
         {
             isWallSliding = true;
             rb.linearVelocity = new Vector2(
                 rb.linearVelocity.x,
                 Mathf.Clamp(rb.linearVelocity.y, -wallSlidingSpeed, float.MaxValue)
             );
-
-            if ((isFacingRight && horizontal < 0f) || (!isFacingRight && horizontal > 0f))
-            {
-                isFacingRight = !isFacingRight;
-                Vector3 localScale = transform.localScale;
-                localScale.x *= -1f;
-                transform.localScale = localScale;
-            }
         }
         else
         {
@@ -280,6 +278,12 @@ public class PlayerMovement : MonoBehaviour
                 localScale.x *= -1f;
                 transform.localScale = localScale;
             }
+
+            if (PlayerActionReporter.Instance != null)
+            {
+                PlayerActionReporter.Instance.ReportWallJump();
+            }
+
             Invoke(nameof(StopWallJumping), wallJumpingDuraction);
         }
     }
