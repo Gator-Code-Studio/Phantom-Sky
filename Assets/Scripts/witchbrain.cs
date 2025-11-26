@@ -27,12 +27,14 @@ public class WitchBrain : MonoBehaviour
     private Rigidbody2D rb;
     private float nextAttackTime = 0f;
     private bool shouldMove = false;
+    private AudioManager audioManager;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         rb.bodyType = RigidbodyType2D.Kinematic;
         rb.gravityScale = 0f;
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
 
         if (anim == null) anim = GetComponent<Animator>();
         if (player == null) player = GameObject.FindGameObjectWithTag("Player")?.transform;
@@ -85,6 +87,7 @@ public class WitchBrain : MonoBehaviour
         if (Time.time >= nextAttackTime)
         {
             anim.SetTrigger("attack");
+            audioManager.PlaySFX(audioManager.Witch);
             nextAttackTime = Time.time + attackCooldown;
 
             // Delay spawn to sync with animation
