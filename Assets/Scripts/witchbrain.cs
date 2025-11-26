@@ -46,13 +46,11 @@ public class WitchBrain : MonoBehaviour
         FacePlayer();
         float distance = Vector2.Distance(transform.position, player.position);
 
-        // 🟣 Walk logic
         if (distance <= walkRange && distance > attackRange)
         {
             shouldMove = true;
             anim.SetBool("move", true);
         }
-        // 🔴 Attack logic
         else if (distance <= attackRange)
         {
             shouldMove = false;
