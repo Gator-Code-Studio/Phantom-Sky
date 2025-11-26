@@ -4,24 +4,41 @@ using System.Collections;
 [RequireComponent(typeof(Rigidbody2D))]
 public class WitchBrain : MonoBehaviour
 {
+    // references
     [Header("References")]
     public Animator anim;
     public Transform player;
     public Transform firePoint;
     public GameObject flameProjectilePrefab;
 
+    // movement
     [Header("Movement")]
     public float moveSpeed = 1f;
+    [Space]
+    public float hoverHeight = 0.2f;
+    public float hoverHeightVariance = 0.05f;
+    public float bobFrequency = 1.8f;
+    [Space]
+    public float predictionTime = 0.25f;
+    public float smoothTime = 0.12f;
 
+    // combat
     [Header("Combat")]
     public float attackRange = 1f;
     public float attackCooldown = 1.5f;
     public float projectileSpeed = 1f;
 
+    // debug
+    [Header("Debug")]
+    public bool drawGizmos = true;
+
+    // private
     private Rigidbody2D rb;
     private float nextAttackTime = 0f;
-    private bool shouldMove = false;
+    private float bobTimer = 0f;
+    private Vector2 velocity;  // For SmoothDamp
 
+    // unity
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -37,34 +54,48 @@ public class WitchBrain : MonoBehaviour
     {
         if (player == null) return;
 
-        FacePlayer();
         float distance = Vector2.Distance(transform.position, player.position);
+        FacePlayer();
 
         if (distance <= attackRange)
         {
-            shouldMove = false;
             SetAttackState();
         }
         else
         {
-            shouldMove = true;
-            anim.SetBool("move", true);
+            SetMoveState();
         }
-    }
-
-    void FixedUpdate()
-    {
-        if (!shouldMove || player == null) return;
-
-        Vector2 targetPos = new Vector2(player.position.x, player.position.y + 0.2f);
-        Vector2 newPos = Vector2.MoveTowards(transform.position, targetPos, moveSpeed * Time.fixedDeltaTime);
-        rb.MovePosition(newPos);
     }
 
     void FacePlayer()
     {
         float scaleX = player.position.x > transform.position.x ? 1f : -1f;
         transform.localScale = new Vector3(scaleX, 1f, 1f);
+    }
+
+    void SetMoveState()
+    {
+        anim.SetBool("move", true);
+        MoveToPlayer();
+    }
+
+    void MoveToPlayer()
+    {
+        // Predict player position
+        Vector2 predictedPos = (Vector2)player.position;
+        Rigidbody2D playerRb = player.GetComponent<Rigidbody2D>();
+        if (playerRb != null)
+        {
+            predictedPos += playerRb.linearVelocity * predictionTime;
+        }
+
+        // Target: always above player with smooth sine bob
+        bobTimer += Time.deltaTime * bobFrequency;
+        float bobOffset = Mathf.Sin(bobTimer + Mathf.PI * 0.25f) * hoverHeightVariance * 0.7f;
+        Vector2 targetPos = new Vector2(predictedPos.x, predictedPos.y + hoverHeight + bobOffset);
+
+        Vector2 smoothPos = Vector2.SmoothDamp(transform.position, targetPos, ref velocity, smoothTime);
+        rb.MovePosition(smoothPos);
     }
 
     void SetAttackState()
@@ -104,5 +135,28 @@ public class WitchBrain : MonoBehaviour
         prb.linearVelocity = dir * projectileSpeed;
 
         Destroy(proj, 3f);
+    }
+
+    // gizmos
+    void OnDrawGizmosSelected()
+    {
+        if (!drawGizmos || player == null) return;
+
+        // Attack range
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+
+        // Hover target (visual debug)
+        bobTimer += Time.deltaTime * bobFrequency;
+        float bobOffset = Mathf.Sin(bobTimer + Mathf.PI * 0.25f) * hoverHeightVariance * 0.7f;
+        Vector2 predictedPos = (Vector2)player.position;
+        Rigidbody2D playerRb = player.GetComponent<Rigidbody2D>();
+        if (playerRb != null) predictedPos += playerRb.linearVelocity * predictionTime;
+
+        Vector2 targetPos = new Vector2(predictedPos.x, predictedPos.y + hoverHeight + bobOffset);
+
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(targetPos, 0.3f);
+        Gizmos.DrawLine(transform.position, targetPos);
     }
 }
