@@ -15,12 +15,13 @@ public class WitchBrain : MonoBehaviour
     [Header("Movement")]
     public float moveSpeed = 1f;
     [Space]
-    public float hoverHeight = 0.2f;       
-    public float hoverHeightVariance = 0.05f;  
+    public float hoverHeight = 0.2f;
+    public float hoverHeightVariance = 0.05f;
     public float bobFrequency = 1.8f;
     [Space]
-    public float predictionTime = 0.25f;      
-    public float smoothTime = 0.12f;          
+    public float predictionTime = 0.25f;
+    public float smoothTime = 0.12f;
+
     // combat
     [Header("Combat")]
     public float attackRange = 1f;
@@ -66,7 +67,6 @@ public class WitchBrain : MonoBehaviour
         }
     }
 
-    // movement
     void FacePlayer()
     {
         float scaleX = player.position.x > transform.position.x ? 1f : -1f;
@@ -101,10 +101,13 @@ public class WitchBrain : MonoBehaviour
     void SetAttackState()
     {
         anim.SetBool("move", false);
+
         if (Time.time >= nextAttackTime)
         {
             anim.SetTrigger("attack");
             nextAttackTime = Time.time + attackCooldown;
+
+            // Delay spawn to sync with animation
             Invoke(nameof(SpawnFlame), 0.4f);
         }
     }
@@ -114,9 +117,23 @@ public class WitchBrain : MonoBehaviour
         if (flameProjectilePrefab == null || firePoint == null) return;
 
         GameObject proj = Instantiate(flameProjectilePrefab, firePoint.position, firePoint.rotation);
+
+        // ENABLE THE HITBOX HERE
+        EnemyAttackHitbox hitbox = proj.GetComponent<EnemyAttackHitbox>();
+        if (hitbox != null)
+        {
+            hitbox.EnableHitbox();
+        }
+
+        // Rigidbody movement
         Rigidbody2D prb = proj.GetComponent<Rigidbody2D>();
         Vector2 dir = (player.position - firePoint.position).normalized;
+
+        float facing = Mathf.Sign(transform.localScale.x);
+        proj.transform.localScale = new Vector3(facing, 1f, 1f);
+
         prb.linearVelocity = dir * projectileSpeed;
+
         Destroy(proj, 3f);
     }
 

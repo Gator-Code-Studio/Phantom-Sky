@@ -3,25 +3,26 @@
 public class SimpleDragonFollowExplode : MonoBehaviour
 {
     [Header("References")]
-    public Transform target;     
-    public Animator animator;     
+    public Transform target;
+    public Animator animator;
 
     private SpriteRenderer sr;
     private Rigidbody2D rb;
     private AudioManager audioManager;
+    private EnemyAttackHitbox hitbox;   
 
     [Header("Detection Settings")]
-    public float followRange = 2f;      // Distance to start following the player
+    public float followRange = 2f;
 
     [Header("Movement Settings")]
-    public float speed = 2.5f;          // Movement speed
-    public float accel = 8f;            // Smooth acceleration
+    public float speed = 1f;
+    public float accel = 8f;
     public float hoverAmplitude = 0.15f;
     public float hoverFrequency = 2.0f;
 
     [Header("Explosion Settings")]
-    public float explosionDistance = 0.8f;  
-    public float explosionDuration = 0.6f;  
+    public float explosionDistance = 0.1f;
+    public float explosionDuration = 0.6f;
 
     private bool isFollowing = false;
     private bool hasExploded = false;
@@ -33,6 +34,8 @@ public class SimpleDragonFollowExplode : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponentInChildren<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        hitbox = GetComponentInChildren<EnemyAttackHitbox>(); 
+
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
 
         GameObject p = GameObject.FindGameObjectWithTag("Player");
@@ -53,12 +56,11 @@ public class SimpleDragonFollowExplode : MonoBehaviour
 
         float distance = Vector2.Distance(transform.position, target.position);
 
-        // Start following when the player is close enough
         if (!isFollowing && distance <= followRange)
         {
             isFollowing = true;
             animator.SetTrigger("StartFollow");
-            audioManager.PlaySFX(audioManager.followSFX); 
+            audioManager.PlaySFX(audioManager.followSFX);
         }
 
         if (!isFollowing) return;
@@ -66,14 +68,12 @@ public class SimpleDragonFollowExplode : MonoBehaviour
         if (sr)
             sr.flipX = target.position.x < transform.position.x;
 
-        // Trigger explosion when close enough
         if (distance <= explosionDistance)
         {
             TriggerExplosion();
             return;
         }
 
-        // Hover motion
         hoverTime += Time.deltaTime * hoverFrequency;
         float hoverOffset = Mathf.Sin(hoverTime) * hoverAmplitude;
 
@@ -88,11 +88,37 @@ public class SimpleDragonFollowExplode : MonoBehaviour
 
     private void TriggerExplosion()
     {
+        if (hasExploded) return;
+
         hasExploded = true;
         rb.linearVelocity = Vector2.zero;
+
         animator.SetTrigger("Explode");
-        audioManager.PlaySFX(audioManager.explodeSFX); 
+        audioManager.PlaySFX(audioManager.explodeSFX);
+
+       
+        if (hitbox != null)
+        {
+           
+            Invoke(nameof(EnableExplosionHitbox), 0.1f);
         }
+    }
+
+    private void EnableExplosionHitbox()
+    {
+        if (hitbox == null) return;
+
+        hitbox.EnableHitbox();
+
+       
+        Invoke(nameof(DisableExplosionHitbox), 0.2f);
+    }
+
+    private void DisableExplosionHitbox()
+    {
+        if (hitbox != null)
+            hitbox.DisableHitbox();
+    }
 
     public void OnExplosionFinished()
     {
