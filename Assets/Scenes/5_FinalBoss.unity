@@ -4273,7 +4273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cbc213f94e906249ad4a83f18f656a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
-  maxHP: 5
+  maxHP: 4
   isPlayer: 0
   hurtInvulnTime: 0.3
   deathVFX: {fileID: 0}

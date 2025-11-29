@@ -92,6 +92,9 @@ public class Health : MonoBehaviour, IDamageable
             if (move) move.enabled = false;
             var attack = GetComponent<PlayerAttack>();
             if (attack) attack.enabled = false;
+            
+            if (GameOverScreen.Instance != null)
+                GameOverScreen.Instance.Show();
         }
 
         if (!isPlayer && !reportedKill)

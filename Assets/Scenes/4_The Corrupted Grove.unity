@@ -175,6 +175,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7437524571685193909, guid: e43a19d8c3807e8409469561bc2da61f, type: 3}
+      propertyPath: maxHP
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 7673245848763368696, guid: e43a19d8c3807e8409469561bc2da61f, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -568448,6 +568452,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 045040e0d762fd646aead119a9e62bb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  canvasGroup: {fileID: 0}
+  fadeInDuration: 0.5
 --- !u!114 &1769506078
 MonoBehaviour:
   m_ObjectHideFlags: 0
