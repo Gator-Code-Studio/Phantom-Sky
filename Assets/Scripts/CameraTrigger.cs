@@ -6,6 +6,9 @@ public class CameraTrigger : MonoBehaviour
     [SerializeField] private bool isDirectional = false;
     public Vector3 newCameraPosition;
     public float moveSpeed = 5f;
+    public Transform player;
+    public float followSpeed = 5f;
+    public bool followY = true;
     private static Stack<Vector3> camHistory = new Stack<Vector3>();
     private Camera mainCam;
     private bool moveCamera = false;
@@ -81,11 +84,22 @@ public class CameraTrigger : MonoBehaviour
 
     void Update()
     {
-        if (!moveCamera) return;
+        if (moveCamera)
+        {
+            // Trigger-based movement
+            mainCam.transform.position =
+                Vector3.MoveTowards(mainCam.transform.position, targetPos, moveSpeed * Time.deltaTime);
 
-        mainCam.transform.position =
-            Vector3.MoveTowards(mainCam.transform.position, targetPos, moveSpeed * Time.deltaTime);
-
-        if (Vector3.Distance(mainCam.transform.position, targetPos) < 0.05f) moveCamera = false;
+            if (Vector3.Distance(mainCam.transform.position, targetPos) < 0.05f)
+                moveCamera = false;
+        }
+        else if (followY)
+        {
+            // Follow player vertically when no scripted movement is happening
+            Vector3 newPos = mainCam.transform.position;
+            newPos.y = Mathf.Lerp(newPos.y, player.position.y, followSpeed * Time.deltaTime);
+            mainCam.transform.position = newPos;
+        }
     }
+
 }
