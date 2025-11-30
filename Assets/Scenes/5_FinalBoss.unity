@@ -2956,6 +2956,18 @@ PrefabInstance:
       propertyPath: m_Size.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6814325410828339763, guid: 2cbf539975b694d44ae80069bbafcf34, type: 3}
+      propertyPath: m_Color.b
+      value: 0.8490566
+      objectReference: {fileID: 0}
+    - target: {fileID: 6814325410828339763, guid: 2cbf539975b694d44ae80069bbafcf34, type: 3}
+      propertyPath: m_Color.g
+      value: 0.8490566
+      objectReference: {fileID: 0}
+    - target: {fileID: 6814325410828339763, guid: 2cbf539975b694d44ae80069bbafcf34, type: 3}
+      propertyPath: m_Color.r
+      value: 0.8490566
+      objectReference: {fileID: 0}
     - target: {fileID: 7763538650916740916, guid: 2cbf539975b694d44ae80069bbafcf34, type: 3}
       propertyPath: maxHP
       value: 35
