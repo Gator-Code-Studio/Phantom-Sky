@@ -41,6 +41,8 @@ public class TutorialManager : MonoBehaviour
     bool running;
     bool subscribed;
 
+    private Health playerHealth; // Added for the damage demonstration
+
     void OnEnable()
     {
         TrySubscribe();
@@ -116,10 +118,27 @@ public class TutorialManager : MonoBehaviour
         if (index >= steps.Count) { End(); return; }
 
         var s = steps[index];
+
+        // Damage the player right when the KillEnemy step starts
+        if (s.type == StepType.KillEnemy)
+        {
+            DamagePlayerForHealthTutorial();
+        }
+
         messageText.text = s.message;
         StopAllCoroutines();
         StartCoroutine(Fade(panel, 0f, 1f, 0.15f));
-        waitingForAnyKey = s.type == StepType.Info;
+
+        // SPECIAL CASE: keep the health message on screen for 3 seconds
+        if (s.type == StepType.Info && s.message.Contains("restores 1 health"))
+        {
+            StartCoroutine(DelayedNext(3f)); // Show for 3 seconds
+            waitingForAnyKey = false;        // Do NOT skip by keypress
+        }
+        else
+        {
+            waitingForAnyKey = s.type == StepType.Info;
+        }
     }
 
     void Next()
@@ -162,6 +181,12 @@ public class TutorialManager : MonoBehaviour
         g.alpha = b;
     }
 
+    private IEnumerator DelayedNext(float time)
+    {
+        yield return new WaitForSeconds(time);
+        Next();
+    }
+
     void End()
     {
         running = false;
@@ -175,6 +200,7 @@ public class TutorialManager : MonoBehaviour
     void SeedIfEmpty()
     {
         if (steps.Count > 0) { return; }
+
         steps.Add(new Step { type = StepType.MoveRight, message = "Press D to move right." });
         steps.Add(new Step { type = StepType.MoveLeft, message = "Press A to move left." });
         steps.Add(new Step { type = StepType.JumpOnce, message = "Press Space to jump." });
@@ -182,11 +208,37 @@ public class TutorialManager : MonoBehaviour
         steps.Add(new Step { type = StepType.Dash, message = "Hold Shift and a direction to dash." });
         steps.Add(new Step { type = StepType.ThrowShuriken, message = "Press F to throw a shuriken." });
         steps.Add(new Step { type = StepType.KatanaAttack, message = "Press J for katana attack." });
-        steps.Add(new Step { type = StepType.KillEnemy, message = "Kill the enemy." });
+
+        // Player takes damage right before they fight the first enemy
+        steps.Add(new Step { type = StepType.KillEnemy, message = "You took damage. Defeat the enemy ahead." });
+
+        // New health tutorial
+        steps.Add(new Step { type = StepType.Info, message = "Killing enemies restores 1 health." });
+
         steps.Add(new Step { type = StepType.WallJump, message = "Press Space while touching a wall to wall jump." });
         steps.Add(new Step { type = StepType.JumpPad, message = "Use the jump pad to launch upward. Avoid the spikes." });
         steps.Add(new Step { type = StepType.UsePortal, message = "Enter the portal to collect the keys." });
-        steps.Add(new Step { type = StepType.CollectItem, message = "Collect the keys to proceed." });
-        steps.Add(new Step { type = StepType.UseTeleporter, message = "Go through this teleporter to proceed to the next level." });
+        steps.Add(new Step { type = StepType.CollectItem, message = "Collect all keys to proceed." });
+        steps.Add(new Step { type = StepType.UseTeleporter, message = "Go through this teleporter to reach the next area." });
+    }
+
+    void DamagePlayerForHealthTutorial()
+    {
+        if (playerHealth == null)
+        {
+            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+            if (playerObj != null)
+            {
+                playerHealth = playerObj.GetComponent<Health>();
+            }
+        }
+
+        if (playerHealth == null) return;
+        if (!playerHealth.isPlayer) return;
+
+        if (playerHealth.hp > 1f)
+        {
+            playerHealth.TakeHit(1);
+        }
     }
 }

@@ -1,4 +1,3 @@
-// JumpPad.cs
 using UnityEngine;
 
 public class JumpPad : MonoBehaviour
@@ -17,6 +16,12 @@ public class JumpPad : MonoBehaviour
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
             }
             rb.AddForce(Vector2.up * bounce, ForceMode2D.Impulse);
+        }
+
+        PlayerMovement playerMovement = collision.gameObject.GetComponent<PlayerMovement>();
+        if (playerMovement != null)
+        {
+            playerMovement.ResetJumpsFromJumpPad();
         }
 
         if (PlayerActionReporter.Instance != null)

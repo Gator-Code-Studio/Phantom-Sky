@@ -11,18 +11,18 @@ public class WitchBrain : MonoBehaviour
     public GameObject flameProjectilePrefab;
 
     [Header("Movement")]
-    public float moveSpeed = 2f;
+    private float moveSpeed = 2.4f;
 
     [Header("Ranges")]
     [Range(0.5f, 10f)]
-    public float attackRange = 1f;
+    private float attackRange = 1f;
 
     [Range(0.5f, 15f)]
     public float walkRange = 5f;
 
     [Header("Combat")]
-    public float attackCooldown = 1.5f;
-    public float projectileSpeed = 3f;
+    private float attackCooldown = 2f;
+    private float projectileSpeed = 2.5f;
 
     private Rigidbody2D rb;
     private float nextAttackTime = 0f;

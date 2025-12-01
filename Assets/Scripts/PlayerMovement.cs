@@ -17,6 +17,8 @@ public class PlayerMovement : MonoBehaviour
     private bool doubleJump;
     private float jumpBufferTime = .2f;
     private float jumpBufferCounter;
+    private bool hasJumpAfterJumpPad;
+
 
     // Wall
     private bool isWallSliding;
@@ -55,6 +57,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isJumpingUp;
     private bool isJumpingDown;
     private bool movingKeyPressed;
+    
 
     AudioManager audioManager;
     private void Awake()
@@ -109,13 +112,15 @@ public class PlayerMovement : MonoBehaviour
 
         horizontal = Input.GetAxis("Horizontal");
 
-        if (coyoteTimeCounter > 0f && jumpBufferCounter > 0f)
+        if ((coyoteTimeCounter > 0f || hasJumpAfterJumpPad) && jumpBufferCounter > 0f)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpingPower);
             doubleJump = true;
             jumpBufferCounter = 0f;
             audioManager.PlaySFX(audioManager.jump);
+            hasJumpAfterJumpPad = false;
         }
+
 
         if (jumpBufferCounter > 0f && !IsGrounded() && doubleJump && !isWallSliding)
         {
@@ -183,6 +188,16 @@ public class PlayerMovement : MonoBehaviour
     {
         return isFacingRight;
     }
+    
+    public void ResetJumpsFromJumpPad()
+    {
+        hasJumpAfterJumpPad = true;
+        doubleJump = true;
+    }
+
+
+
+
 
     private void FixedUpdate()
     {
