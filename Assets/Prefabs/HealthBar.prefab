@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8359692116689991471}
   - component: {fileID: 5248106780843485321}
   - component: {fileID: 6280294701046340292}
+  - component: {fileID: 4910393775344199276}
   m_Layer: 5
   m_Name: HealthBar
   m_TagString: Untagged
@@ -62,7 +63,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!114 &8359692116689991471
 MonoBehaviour:
@@ -76,17 +77,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.CanvasScaler
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &5248106780843485321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,6 +120,19 @@ MonoBehaviour:
   playerHealth: {fileID: 0}
   totalhealthBar: {fileID: 7937875469312177877}
   currenthealthBar: {fileID: 9081622369607874394}
+--- !u!114 &4910393775344199276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4671229394181725546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46befd3f6e038da4381cb51f933105ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ForceTopLayerAndHealthBar
+  healthBar: {fileID: 4671229394181725546}
 --- !u!1 &7016489198909265601
 GameObject:
   m_ObjectHideFlags: 0

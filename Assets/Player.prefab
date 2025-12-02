@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 2173518041029002266}
   - component: {fileID: 4000433933871115156}
   - component: {fileID: 7399289439989713233}
+  - component: {fileID: 5686144489130861774}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -368,6 +369,25 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   animator: {fileID: 2173518041029002266}
+--- !u!114 &5686144489130861774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3566877571623616808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cbc213f94e906249ad4a83f18f656a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Health
+  maxHP: 5
+  isPlayer: 0
+  hurtInvulnTime: 0.3
+  deathVFX: {fileID: 0}
+  canChase: 0
+  player: {fileID: 0}
+  speed: 3
 --- !u!1 &3867678443384733492
 GameObject:
   m_ObjectHideFlags: 0

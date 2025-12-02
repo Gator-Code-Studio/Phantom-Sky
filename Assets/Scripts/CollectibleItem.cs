@@ -6,14 +6,24 @@ public class CollectableItem : MonoBehaviour
     public static int itemsCollected = 0;
 
     [SerializeField] private GameObject objectToDestroy;
-    [SerializeField] private int keysNeeded = 1;
+    [SerializeField] private int keysNeeded = 0;
+
+    void Awake()
+    {
+        if (keysNeeded <= 0)
+        {
+            CollectableItem[] allKeys = FindObjectsOfType<CollectableItem>();
+            keysNeeded = allKeys.Length;
+            Debug.Log("Keys needed (auto): " + keysNeeded);
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!collision.CompareTag("Player")) { return; }
 
         itemsCollected = itemsCollected + 1;
-        Debug.Log("Item collected! Total items: " + itemsCollected);
+        Debug.Log("Item collected! Total items: " + itemsCollected + " / " + keysNeeded);
 
         if (PlayerActionReporter.Instance != null)
         {
@@ -22,6 +32,7 @@ public class CollectableItem : MonoBehaviour
 
         if (objectToDestroy != null && itemsCollected >= keysNeeded)
         {
+            Debug.Log("All keys collected. Destroying: " + objectToDestroy.name);
             Destroy(objectToDestroy);
         }
 

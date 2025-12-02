@@ -8,6 +8,7 @@ public class AudioManager : MonoBehaviour
     public AudioSource musicSource;
     public AudioSource SFXSource;
 
+    [Header("Clips")]
     public AudioClip background;
     public AudioClip punch;
     public AudioClip sword;
@@ -17,6 +18,11 @@ public class AudioManager : MonoBehaviour
     public AudioClip followSFX;
     public AudioClip batSFX;
     public AudioClip enemySFX;
+    public AudioClip Witch;
+
+    [Header("Volume")]
+    [Range(0f, 1f)] public float musicVolume = 1f;
+    [Range(0f, 1f)] public float sfxVolume = 1f;
 
     private void Awake()
     {
@@ -36,6 +42,7 @@ public class AudioManager : MonoBehaviour
         {
             musicSource.clip = background;
             musicSource.loop = true;
+            musicSource.volume = musicVolume;   
             musicSource.Play();
         }
     }
@@ -45,7 +52,7 @@ public class AudioManager : MonoBehaviour
         if (clip != null && SFXSource != null)
         {
             SFXSource.pitch = Random.Range(0.707f, 1.414f);
-            SFXSource.PlayOneShot(clip);
+            SFXSource.PlayOneShot(clip, sfxVolume);  
             StartCoroutine(ResetPitchAfterDelay(clip.length));
         }
     }

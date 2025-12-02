@@ -20,9 +20,6 @@ public class BatBrain : MonoBehaviour
     public float hoverAmplitude = 0.15f;
     public float hoverFrequency = 3.0f;
 
-    // [Header("Attack Lunge")]
-    // public float attackLungeSpeed = 5f;       // optional: small dash on attack
-
     [Header("Visual Facing")]
     public bool spriteFacesRight = true;      
     private SpriteRenderer sr;
@@ -45,7 +42,6 @@ public class BatBrain : MonoBehaviour
 
     void Update()
     {
-
         if (!target)
         {
             var p = GameObject.FindGameObjectWithTag("Player");
@@ -53,7 +49,6 @@ public class BatBrain : MonoBehaviour
         }
 
         float dt = Time.deltaTime;
-
 
         if (!isAwake)
         {
@@ -68,12 +63,10 @@ public class BatBrain : MonoBehaviour
             return;
         }
 
-
         cooldown -= dt;
 
         Vector2 toPlayer = target ? (Vector2)(target.position - transform.position) : Vector2.zero;
         float dist = target ? toPlayer.magnitude : Mathf.Infinity;
-
 
         if (target && sr != null)
         {
@@ -105,11 +98,9 @@ public class BatBrain : MonoBehaviour
         float hoverOffset = Mathf.Sin(hoverTime) * hoverAmplitude;
         desiredVel.y += hoverOffset;
 
-
         Vector2 v = rb.linearVelocity;
         v = Vector2.MoveTowards(v, desiredVel, accel * dt);
         rb.linearVelocity = v;
-
 
         anim.SetFloat("Speed", v.magnitude);
     }
@@ -118,16 +109,16 @@ public class BatBrain : MonoBehaviour
 
     public void OnWakeFinished() { isAwake = true; }
 
-
     public void EnableHitbox() { if (attackHitbox) attackHitbox.EnableHitbox(); }
     public void DisableHitbox() { if (attackHitbox) attackHitbox.DisableHitbox(); }
 
-    // optional: call once near the start of Attack.anim
-    /* public void AttackLunge()
+    public void ForceWake()
     {
-        if (!target) return;
-        Vector2 dir = ((Vector2)(target.position - transform.position)).normalized;
-        rb.linearVelocity = dir * attackLungeSpeed;
+        if (isAwake) return;
+        isAwake = true;                  // important: actually mark as awake
+        if (anim != null)
+        {
+            anim.SetTrigger("Wake");     // still play wake anim
+        }
     }
-    */
 }
